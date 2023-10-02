@@ -1,18 +1,27 @@
 package test
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
 	http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
+	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
 func TestHelloWorldAppUnit(t *testing.T) {
 	t.Parallel()
 
+	// 6 characters random string
+	uniqueId := random.UniqueId()
 	terraformOptions := &terraform.Options{
+		// path to Terraform code
 		TerraformDir: "../examples/hello-world-app",
+		// variables being passed to our Terraform code using -var options
+		Vars: map[string]interface{}{
+			"name": fmt.Sprintf("hello-world-app-%s", uniqueId),
+		},
 	}
 	// cleanup
 	defer terraform.Destroy(t, terraformOptions)
