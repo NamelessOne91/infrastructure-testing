@@ -50,6 +50,11 @@ func TestProxyAppIntegration(t *testing.T) {
 func configWebService(t *testing.T, path string) *terraform.Options {
 	return &terraform.Options{
 		TerraformDir: path,
+		RetryableTerraformErrors: map[string]string{
+			"TLS handshake timeout": "Terraform setup error",
+		},
+		MaxRetries:         3,
+		TimeBetweenRetries: 3 * time.Second,
 	}
 }
 
@@ -72,6 +77,11 @@ func configProxyApp(t *testing.T, webServiceOpts *terraform.Options) *terraform.
 		Vars: map[string]interface{}{
 			"url_to_proxy": url,
 		},
+		RetryableTerraformErrors: map[string]string{
+			"TLS handshake timeout": "Terraform setup error",
+		},
+		MaxRetries:         3,
+		TimeBetweenRetries: 3 * time.Second,
 	}
 }
 
