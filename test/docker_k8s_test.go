@@ -10,9 +10,10 @@ import (
 	"github.com/gruntwork-io/terratest/modules/k8s"
 )
 
-func TestDockerK8s(t *testing.T) {
-	buildDockerImage(t)
+func TestDockerK8sUnit(t *testing.T) {
+	t.Parallel()
 
+	buildDockerImage(t)
 	path := "../examples/docker-k8s/deployment.yml"
 	options := k8s.NewKubectlOptions("", "", "default")
 	defer k8s.KubectlDelete(t, options, path)

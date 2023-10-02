@@ -9,6 +9,8 @@ import (
 )
 
 func TestHelloWorldAppUnit(t *testing.T) {
+	t.Parallel()
+
 	terraformOptions := &terraform.Options{
 		TerraformDir: "../examples/hello-world-app",
 	}

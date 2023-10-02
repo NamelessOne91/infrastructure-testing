@@ -8,7 +8,9 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestProxyApp(t *testing.T) {
+func TestProxyAppIntegration(t *testing.T) {
+	t.Parallel()
+
 	webServiceOtps := configWebService(t)
 	defer terraform.Destroy(t, webServiceOtps)
 	terraform.InitAndApply(t, webServiceOtps)
