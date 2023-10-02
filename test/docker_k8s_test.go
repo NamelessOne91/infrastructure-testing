@@ -18,7 +18,7 @@ func TestDockerK8s(t *testing.T) {
 	defer k8s.KubectlDelete(t, options, path)
 
 	k8s.KubectlApply(t, options, path)
-	validate(t, options)
+	validateDockerK8s(t, options)
 }
 
 func buildDockerImage(t *testing.T) {
@@ -29,7 +29,7 @@ func buildDockerImage(t *testing.T) {
 	docker.Build(t, path, options)
 }
 
-func validate(t *testing.T, opts *k8s.KubectlOptions) {
+func validateDockerK8s(t *testing.T, opts *k8s.KubectlOptions) {
 	k8s.WaitUntilServiceAvailable(t, opts, "hello-world-app-service", 10, 3*time.Second)
 
 	http_helper.HttpGetWithRetry(
